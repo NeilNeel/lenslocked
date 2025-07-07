@@ -40,7 +40,12 @@ func main(){
 	r.Get("/", homeHandler)
 	r.Get("/contact", contactHandler)
 	r.Get("/faq", faqHandler)
-	r.Get("/user/{userID}",userHandler)
+	
+	r.Group(func(r chi.Router){
+		r.Use(middleware.Logger)
+		r.Get("/user/{userID}",userHandler)
+	})
+
 	r.NotFound(func (w http.ResponseWriter, r *http.Request)  {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
 	})
