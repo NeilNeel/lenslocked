@@ -1,0 +1,18 @@
+# Go binary
+lenslocked
+lenslocked.exe
+lenslocked.exe~
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Go module cache (optional, usually not needed)
+vendor/
+
+# modd binary if used
+modd
+
+# dotenv or config
+.env
