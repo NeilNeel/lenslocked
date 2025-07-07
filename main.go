@@ -27,12 +27,18 @@ func faqHandler(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, "<p>A: you can mail me at <a href=\"mailto: barvaliyaneel@gmail.com\">barvaliyaneel@gmail.com</a></p>")
 }
 
+func userHandler(w http.ResponseWriter, r *http.Request){
+	userID := chi.URLParam(r, "userID")
+	fmt.Fprintf(w, "Displaying the user %v", userID)
+}
+
 
 func main(){
 	r := chi.NewRouter()
 	r.Get("/", homeHandler)
 	r.Get("/contact", contactHandler)
 	r.Get("/faq", faqHandler)
+	r.Get("/user/{userID}",userHandler)
 	r.NotFound(func (w http.ResponseWriter, r *http.Request)  {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
 	})
