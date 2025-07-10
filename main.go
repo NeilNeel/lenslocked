@@ -38,8 +38,19 @@ func faqHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func userHandler(w http.ResponseWriter, r *http.Request){
-	userID := chi.URLParam(r, "userID")
-	fmt.Fprintf(w, "Displaying the user %v", userID)
+	// userID := chi.URLParam(r, "userID")
+	// fmt.Fprintf(w, "Displaying the user %v", userID)
+
+	tpl, err := template.ParseFiles("./templates/user.gohtml")
+	if err!= nil{
+		log.Printf("Loading the page %v",err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	err = tpl.Execute(w, chi.URLParam(r, "userID"))
+	if err!=nil{
+		panic(err)
+	}
 }
 
 
