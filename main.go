@@ -10,33 +10,31 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request){
+func executeTemplate(w http.ResponseWriter, filePath string){
 	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	tpl, err := template.ParseFiles("./templates/home.gohtml")
-	if err != nil {
-		log.Printf("parsing template %v",err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	// load the template
+	tpl, err := template.ParseFiles(filePath)
+	if err!= nil{
+		log.Printf("parsing the template %v", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 	err = tpl.Execute(w, nil)
-	if err!= nil{
+	if err!=nil{
 		panic("Error")
 	}
 }
 
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	executeTemplate(w, "./templates/home.gohtml")
+}
+
 func contactHandler(w http.ResponseWriter,r *http.Request){
-	fmt.Fprintf(w, "<h1>Contact Page</h1><p>To get in touch, please email me at <a href=\"barvaliyaneel010@gmail.com\">barvaliyaneel010@gmail.com</a></p>")
+	executeTemplate(w, "./templates/contact.gohtml")
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request){
-	fmt.Fprintf(w, "<p>Q: Is there a free version?</p>")
-	fmt.Fprintf(w, "<p>A: Yes! We offer a free trail for 30 days on any paid plans.</p>")
-	fmt.Fprintf(w, "<hr/>")
-	fmt.Fprintf(w, "<p>Q: What's the most memorable show you watched?</p>")
-	fmt.Fprintf(w, "<p>A: Hmm, I think it would be Mr. Plankton</p>")
-	fmt.Fprintf(w, "<hr/>")
-	fmt.Fprintf(w, "<p>Q: How can I contact you?</p>")
-	fmt.Fprintf(w, "<p>A: you can mail me at <a href=\"mailto: barvaliyaneel@gmail.com\">barvaliyaneel@gmail.com</a></p>")
+	executeTemplate(w, "./templates/faq.gohtml")
 }
 
 func userHandler(w http.ResponseWriter, r *http.Request){
