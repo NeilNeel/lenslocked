@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github/NeilNeel/lenslocked/views"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,18 +12,14 @@ import (
 )
 
 func executeTemplate(w http.ResponseWriter, filePath string){
-	w.Header().Set("Content-Type","text/html; charset=utf-8")
 	// load the template
-	tpl, err := template.ParseFiles(filePath)
+	tpl, err := views.Parse(filePath)
 	if err!= nil{
 		log.Printf("parsing the template %v", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-	err = tpl.Execute(w, nil)
-	if err!=nil{
-		panic("Error")
-	}
+	tpl.Execute(w,nil)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request){
