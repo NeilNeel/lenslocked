@@ -14,6 +14,7 @@ import (
 func main(){
 	r := chi.NewRouter()
 	
+	//sample data for home named template
 	tpl := views.Must(views.ParseFS("home.gohtml"))
 	r.Get("/", controller.StaticHandler(tpl))
 

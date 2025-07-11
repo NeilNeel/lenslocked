@@ -1,1 +1,9 @@
 <h1>Hello World!!</h1>
+{{template "home" .Name}}
+
+{{define "home"}}
+<p>
+    This is the home page of the Lenslocked application.
+    Hi, {{.Name}}
+</p>
+{{end}}
